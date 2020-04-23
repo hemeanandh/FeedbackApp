@@ -2,8 +2,14 @@ package MyGradleProject;
 
 
 
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import MyGradleProject.repository.UserRepository;
+
+import MyGradleProject.Entities.User;
 
 //@RestController
 public class HelloController {
@@ -13,9 +19,10 @@ public class HelloController {
 		return "Greetings from Spring Bootttt!";
 	}
 
-//	@RequestMapping("/test")
+	@RequestMapping("/test")
 	public String test() {
-		return "Test Greetings from Spring Bootttt!";
+		return "";
 	}
+	
 
 }

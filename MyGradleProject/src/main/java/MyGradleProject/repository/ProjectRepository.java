@@ -6,4 +6,4 @@ import MyGradleProject.Entities.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long>{
 
-}
+}	
