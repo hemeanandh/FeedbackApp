@@ -1,0 +1,21 @@
+.addFeedbackComponent {
+    padding: 20px;
+    border: 1px solid black;
+    margin: 100px;
+    }
+
+.attributes, .employeelabel {
+    margin:10px;
+}
+
+label{
+    margin: 0px 10px 0px 0px;
+}
+
+.btnPrimary {
+    background-color: blue;
+    color: white;
+    font-size: 14px;
+    margin: 20px 100px;
+    padding: 10px;
+}

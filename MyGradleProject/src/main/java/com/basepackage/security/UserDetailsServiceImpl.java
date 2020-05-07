@@ -1,4 +1,4 @@
-package Service;
+package com.basepackage.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -9,28 +9,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import MyGradleProject.UserPrincipal;
-import MyGradleProject.Entities.LoginUser;
-import MyGradleProject.Entities.Project;
-import MyGradleProject.repository.LoginUserRepository;
-import MyGradleProject.repository.ProjectRepository;
+import com.basepackage.DummyClass;
+import com.basepackage.Entities.LoginUser;
+import com.basepackage.Repositories.LoginUserRepository;
 
 import static java.util.Collections.emptyList;
 
 import java.util.Optional;
 
 @Service
-@EnableJpaRepositories("MyGradleProject.repository")
+
 public class UserDetailsServiceImpl implements UserDetailsService {
    
 	@Autowired
-	private LoginUserRepository loginUserRepository;
+	public LoginUserRepository loginUserRepository;
 
+	@Autowired
+	public DummyClass dummy;
 
    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	  System.out.println("username "+username);
+    	  System.out.println("dummy "+ dummy.hello());
 //
 //    	  LoginUser loginUser = new LoginUser();
 //    	  loginUser.setPassword("user1");
@@ -39,8 +40,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //    	Optional<Project> opLoginUser = projectRepository.findById((long) 1);
     	
     	  
+    	  
 //    	 System.out.println("tttest "+opLoginUser.get().getProjectName());
-    	  LoginUser loginUser = loginUserRepository.findByUsername(username);
+    	  LoginUser loginUser = loginUserRepository.findByid(Long.parseLong(username));
 //        if (opLoginUser == null) {
 //      	  System.out.println("test");
 //            throw new UsernameNotFoundException(username);

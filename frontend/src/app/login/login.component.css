@@ -1,0 +1,26 @@
+.loginComponent {
+padding: 20px;
+border: 1px solid black;
+margin: 100px;
+}
+
+.form-group {
+    padding:20px ;
+
+}
+
+.form-control {
+    padding:10px 10px;
+    margin: 0px 5px;
+}
+
+.form-button {
+   margin-left: 100px;
+}
+
+.btnPrimary {
+    color:white;
+    background-color: blue;
+    padding: 10px;
+    font-size: 14px;
+}

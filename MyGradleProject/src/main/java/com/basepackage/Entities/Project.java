@@ -1,4 +1,4 @@
-package MyGradleProject.Entities;
+package com.basepackage.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

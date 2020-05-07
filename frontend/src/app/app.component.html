@@ -1,19 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <br>
+<div class="appheader" style="width:100%; padding:10px">
+ 
+<span class="welcome">Welcome to MyFeedback App</span>
 
-  <p>This is my feedback App</p><br/><br/>
-
-  <!-- <input type=”button” ng-click="doLogin()” /> -->
-  <button id="loginbutton" (click)="doLogin()">Click here to login</button>
-
-  <a routerLink="/add" >Add Feedback</a>
-<app-login></app-login> 
+<a class="loginlogoutContainer" [routerLink]="['/login']">login</a>
 
 </div>
+
+<router-outlet></router-outlet>
 
 
 

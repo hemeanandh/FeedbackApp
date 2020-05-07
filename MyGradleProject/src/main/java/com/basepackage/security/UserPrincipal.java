@@ -1,4 +1,4 @@
-package MyGradleProject;
+package com.basepackage.security;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import MyGradleProject.Entities.LoginUser;
+import com.basepackage.Entities.LoginUser;
 
 public class UserPrincipal implements UserDetails{
 

@@ -1,7 +1,9 @@
-package MyGradleProject;
+package com.basepackage.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.basepackage.MyConstants;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,12 +11,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import MyGradleProject.MyConstants;
+import java.util.Enumeration;
 
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -28,8 +30,21 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
         String header = req.getHeader(MyConstants.HEADER_STRING);
+        Cookie[] cookie = req.getCookies();
+        if(header == null && cookie != null)
+        for(int i =0;i<cookie.length;i++) {
+        	if(cookie[i].getName().equals(MyConstants.HEADER_STRING)) {
+        		header = cookie[i].getValue();
+        	}
+        }
+//        Enumeration<String> headerNames = req.getHeaderNames();
+//        if (headerNames != null) {
+//            while (headerNames.hasMoreElements()) {
+//                   // System.out.println(headerNames.nextElement() + " : " + req.getHeader(headerNames.nextElement()));
+//            }
+//    }
 
-        if (header == null || !header.startsWith("Bearer ")) {
+        if (header == null/* || !header.startsWith("Bearer ")*/) {
             chain.doFilter(req, res);
             return;
         }
@@ -42,14 +57,25 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(MyConstants.HEADER_STRING);
+        if(token == null) {
+        	Cookie[] cookie = request.getCookies();
+        	if(cookie != null) {
+        		for(int i =0;i<cookie.length;i++) {
+        				if(cookie[i].getName().equals(MyConstants.HEADER_STRING)) {
+        					token = cookie[i].getValue();
+        				}
+        		}
+        	}
+        }
         if (token != null) {
             // parse the token.
             String user = JWT.require(Algorithm.HMAC512(MyConstants.SECRET.getBytes()))
                     .build()
-                    .verify(token.replace(MyConstants.TOKEN_PREFIX, ""))
+//                   //.verify(token.replace(MyConstants.TOKEN_PREFIX, ""))
+                    .verify(token)
                     .getSubject();
 
-            if (user != null) {
+            if (token != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
             return null;

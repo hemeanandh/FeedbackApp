@@ -1,3 +1,43 @@
-<p>
-  addfeedback works!
-</p>
+<div class='addFeedbackComponent'>
+
+  <div *ngIf="val">
+  <form  [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+    <div>
+      <label class='employeelabel'>Choose Employee</label>
+      <select formControlName="employee" >
+           <option value="" disabled>Choose Employee</option>
+        <option *ngFor="let emp of employees; let i=index" value={{i}}>{{emp.empName}}</option>
+
+      </select>
+    </div>
+
+    <div *ngFor= "let attribute of feedbackAttr" class='attributes'>
+      <label>{{attribute.attr_name}}</label>
+      <select formControlName={{attribute.attr_name}}>
+        <option value="title">Select one</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>  
+      <!-- <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" class="form-control" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+      </div> -->
+      <div class="form-group">
+          <button class="btnPrimary">Submit</button>
+         
+      </div>
+  </form>
+
+</div>
+  </div>
+  
+  
+  
+  
