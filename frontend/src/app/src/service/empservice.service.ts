@@ -17,11 +17,11 @@ export class EmpserviceService {
   getUserDetails(id:Number) :Observable<any>{
   
     
-     return this.http.get("http://localhost:8080/api/v1/users/"+id);
+     return this.http.get("http://localhost:8080/api/v1/users/"+id,{withCredentials:true});
   }
 
   getMyProjectMemebers(id:Number) : Observable<any> {
-    return this.http.get("http://localhost:8080/api/v1/getMyProjectMembers?userid="+id);
+    return this.http.get("http://localhost:8080/api/v1/getMyProjectMembers?userid="+id,{withCredentials:true});
   }
 
   getLoginService(Username:String,pwd:String) : Observable<any>{

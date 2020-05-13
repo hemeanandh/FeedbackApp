@@ -28,6 +28,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,7 +71,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	        http
 	        .cors().and()
 	        	.authorizeRequests()
-	                //.antMatchers("/api/v1/users").authenticated()
+	                .antMatchers("/api/v1/manageFeedback").hasAuthority("2")
+	                .antMatchers("/api/v1/**").authenticated()
 	                .anyRequest().permitAll()
 	                .and()
 	                

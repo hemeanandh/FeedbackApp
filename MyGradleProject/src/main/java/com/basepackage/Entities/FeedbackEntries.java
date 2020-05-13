@@ -1,10 +1,12 @@
 package com.basepackage.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="feedback_entries")
@@ -19,6 +21,10 @@ public class FeedbackEntries {
 		private int fb_target_id;
 		
 		private String fb_desc;
+		
+		private int fb_attr_id;
+		
+		
 		
 		public Long getFb_id() {
 			return fb_id;
@@ -60,6 +66,23 @@ public class FeedbackEntries {
 			this.feedback_entriescol = feedback_entriescol;
 		}
 
+		public int getFb_attr_id() {
+			return fb_attr_id;
+		}
+
+		public void setFb_attr_id(int fb_attr_id) {
+			this.fb_attr_id = fb_attr_id;
+		}
+
 		private String feedback_entriescol;
+		
+		
+		@Override
+		public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+			FeedbackEntries fb = (FeedbackEntries)obj;
+			return ( this.getFb_target_id() == fb.getFb_target_id() && 
+					this.getFb_attr_id() == fb.getFb_attr_id() );
+		}
 
 }

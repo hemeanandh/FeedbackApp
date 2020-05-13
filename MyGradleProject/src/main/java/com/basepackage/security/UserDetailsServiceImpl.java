@@ -2,6 +2,7 @@ package com.basepackage.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,7 @@ import com.basepackage.Repositories.LoginUserRepository;
 
 import static java.util.Collections.emptyList;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -28,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public DummyClass dummy;
 
    
+	//UserId will be passed. Instead of userName
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	  System.out.println("username "+username);
@@ -47,6 +50,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //      	  System.out.println("test");
 //            throw new UsernameNotFoundException(username);
 //        }
-        return new User(loginUser.getUsername(), loginUser.getPassword(), emptyList());
+    	  System.out.println("ttrer"+loginUser.getRole_id());
+        return new User(loginUser.getUsername(), loginUser.getPassword(), Collections.singleton(
+        		new SimpleGrantedAuthority(loginUser.getRole_id()+"" )) );
     }
 }

@@ -2,10 +2,15 @@ package com.basepackage.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.impl.JWTParser;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.basepackage.MyConstants;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -16,7 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -69,14 +80,20 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
         if (token != null) {
             // parse the token.
-            String user = JWT.require(Algorithm.HMAC512(MyConstants.SECRET.getBytes()))
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(MyConstants.SECRET.getBytes()))
                     .build()
 //                   //.verify(token.replace(MyConstants.TOKEN_PREFIX, ""))
-                    .verify(token)
-                    .getSubject();
+                    .verify(token);
+           String user= decodedJWT.getSubject();
+          
+           Map<String,Claim> cl = decodedJWT.getClaims();
+
+       
+            final Collection authorities = Collections.singleton(new SimpleGrantedAuthority(cl.get("role").asString()));
+                    
 
             if (token != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(user, null,authorities);
             }
             return null;
         }

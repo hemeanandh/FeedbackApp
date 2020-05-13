@@ -11,6 +11,7 @@ import { AddfeedbackComponent } from './addfeedback/addfeedback.component';
 import { ViewfeedbackComponent } from './viewfeedback/viewfeedback.component';
 import { PreparereportComponent } from './preparereport/preparereport.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
+import { ViewfeedbacksComponent } from './viewfeedbacks/viewfeedbacks.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
     AddfeedbackComponent,
     ViewfeedbackComponent,
     PreparereportComponent,
-    MyprofileComponent
+    MyprofileComponent,
+    ViewfeedbacksComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +36,10 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
         
       },
       { path: 'login', component: LoginComponent },
+
+      { path: 'profile', component: MyprofileComponent },
+
+      { path: 'view', component: ViewfeedbackComponent },
       
     ])
     

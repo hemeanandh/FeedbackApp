@@ -3,8 +3,11 @@ package com.basepackage;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -63,9 +66,11 @@ public class HelloController {
 		List<FeedbackAttr>  list = feedbackAttrRepository.findAll();
 		
 		List<FeedbackAttr> newList = new ArrayList<FeedbackAttr>();
+		
 		for(int i=0;i<list.size();i++ ) {
 			System.out.println(list.get(i).getAttr_name());
 		}
+		
 		if(giverDesignation == 2) {
 			giverDesignation = 1;
 		}
@@ -77,17 +82,43 @@ public class HelloController {
 		} else if(giverDesignation > receiverDesignation) { //giving for a junior
 			newList.add(list.get(0)); newList.add(list.get(1));
 		} else if(receiverDesignation > giverDesignation) { // giving for a senior
-			newList.add(list.get(5)); newList.add(list.get(6));
+			newList.add(list.get(4)); newList.add(list.get(5));
 		}
 		
-		return list;
+		
+		for(int i=0;i<newList.size();i++ ) {
+			System.out.println(newList.get(i).getAttr_name());
+		}
+		
+		return newList;
 	}
 	
-	@PostMapping("/api/v1/testList")
+	@PostMapping("/api/v1/submitFeedback")
 	public String testit(@RequestBody List<FeedbackEntries> list ) {
 		System.out.println(list.get(0).getFb_desc());
 		feedbackEntriesRepository.saveAll(list);
-		return "tt";
+		return "success";
+	}
+	
+	@GetMapping("/api/v1/manageFeedback") // only employee with role -2(superuser) has access to this resource
+	public Set<FeedbackEntries> mytest( @RequestParam("mgrId") Long empId) { 
+		
+		List<FeedbackEntries> fbEntries = feedbackEntriesRepository.getFeedbacksOfMySubordinates(empId);
+		Set<FeedbackEntries> accumalatedList = new HashSet<FeedbackEntries>();
+		for(int i=0;i<fbEntries.size();i++) {
+			final int c = i;
+		List<FeedbackEntries> temp = 	fbEntries.stream()                        // Convert to steam
+            .filter(x -> x.getFb_target_id() == fbEntries.get(c).getFb_target_id() )        // we want "jack" only
+            .collect(Collectors.toList());
+		
+		FeedbackEntries acc_entry = fbEntries.get(c); int total = 0;
+		for(int k =0;k<temp.size();k++) {
+			total+= Integer.parseInt(temp.get(k).getFeedback_entriescol());
+		}
+		accumalatedList.add(fbEntries.get(i));
+		}
+		
+		return accumalatedList;
 	}
 	
 	@GetMapping("/api/v1/getMyProjectMembers") 

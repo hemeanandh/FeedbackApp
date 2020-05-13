@@ -21,6 +21,17 @@ public class LoginUser {
 	
 	@Column(name="password")
 	private String password;
+	
+	public Long getRole_id() {
+		return role_id;
+	}
+
+	public void setRole_id(Long role_id) {
+		this.role_id = role_id;
+	}
+
+	@Column
+	private Long role_id;
 
 	public Long getId() {
 		return id;

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         const routerData:NavigationExtras  = {
           state : emp
           }
-            this.router.navigate(['/add'],{state:{dat:emp} } ); 
+            this.router.navigate(['/profile'],{state:{dat:emp} } ); 
           });
 
         }

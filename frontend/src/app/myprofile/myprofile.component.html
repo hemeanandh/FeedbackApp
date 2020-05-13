@@ -1,3 +1,9 @@
-<p>
-  myprofile works!
-</p>
+<div>
+
+  <h2>Welcome {{userDetails.empName}}</h2>
+  <br/>
+
+  <button (click)='routerToAddFeedbackComponent()' >Add feedback</button>
+
+  <button (click)="routerToViewFeedbackComponent()" >View Feedbacks</button>
+</div>
